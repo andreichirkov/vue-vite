@@ -34,6 +34,10 @@ export default {
       if (this.rules.required && this.value.length === 0) {
         return 'Value is required'
       }
+
+      if (this.rules.min && this.value.length < this.rules.min) {
+        return `The min length is ${this.rules.min}`
+      }
     }
   }
 }

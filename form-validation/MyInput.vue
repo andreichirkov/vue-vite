@@ -5,7 +5,8 @@
   </div>
   <input
       :id="name"
-      v-model="value"
+      :value="value"
+      @input="input"
   />
 </template>
 
@@ -17,6 +18,10 @@ export default {
       type: String,
       required: true
     },
+    value: {
+      type: String,
+      required: true
+    },
     rules: {
       //min: number
       //required: boolean
@@ -24,9 +29,12 @@ export default {
       default: {}
     }
   },
-  data() {
-    return {
-      value: ''
+  methods: {
+    input($event) {
+      this.$emit('update', {
+        name: this.name.toLowerCase(),
+        value: $event.target.value
+      })
     }
   },
   computed: {

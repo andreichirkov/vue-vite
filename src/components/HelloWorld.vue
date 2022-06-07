@@ -1,9 +1,9 @@
 <script>
-data() {
-  return {
-
-  }
-}
+// data() {
+//   return {
+//
+//   }
+// }
 </script>
 
 <template>

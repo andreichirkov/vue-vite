@@ -2,8 +2,22 @@
   <div class="cards">
     <card
       v-for="pokemon in pokemons"
-      :key="pokemon.id"
-      :pokemon="pokemon"/>
+      :key="pokemon.id">
+
+      <template v-slot:title >
+        {{ pokemon.name }}
+      </template>
+
+      <template v-slot:content >
+        <img :src="pokemon.sprite" alt="img">
+      </template>
+
+      <template v-slot:description >
+        <div v-for="type in pokemon.types" :key="type">
+          {{ type }}
+        </div>
+      </template>
+    </card>
   </div>
 </template>
 
@@ -53,5 +67,7 @@ export default {
   display: flex;
 }
 
-
+img {
+  width: 100%;
+}
 </style>

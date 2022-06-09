@@ -1,29 +1,22 @@
 <template>
   <div class="card">
     <div class="title">
-      {{ pokemon.name }}
+      <slot name="title" />
     </div>
     <div class="content">
-      <img :src="pokemon.sprite" alt="img">
+      <slot name="content" />
     </div>
-    <div class="description" v-for="type in pokemon.types" :key="type">
-      {{ type }}
+    <div class="description">
+      <slot name="description"></slot>
     </div>
   </div>
 </template>
 
 <script>
-const api = 'https://pokeapi.co/api/v2/pokemon'
-const ids = [1, 4, 7]
 
 export default {
   name: "Card",
-  props: {
-    pokemon: {
-      type: Object,
-      required: true
-    }
-  },
+
   data() {
     return {
     }
@@ -36,10 +29,6 @@ export default {
 </script>
 
 <style scoped>
-
-img {
-  width: 100%;
-}
 
 .card {
   border: 1px solid silver;

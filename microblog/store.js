@@ -1,5 +1,5 @@
 import {reactive} from "vue";
-import { testPosts } from "./testPosts.js";
+import {testPosts} from "./testPosts.js";
 
 class Store {
   constructor() {
@@ -15,7 +15,7 @@ class Store {
 
   incrementLike(post) {
     const thePost = this.state.posts.find(x => {
-      return x.id ===  post.id
+      return x.id === post.id
     })
 
     if (!thePost) {
@@ -23,6 +23,17 @@ class Store {
     }
 
     thePost.likes += 1
+  }
+
+  get filteredPosts() {
+    if (!store.state.currentTag) {
+      return store.state.posts
+    }
+
+    return store.state.posts.filter(
+        //Full match search logic
+        post => post.hashtags.includes(store.state.currentTag)
+    )
   }
 }
 

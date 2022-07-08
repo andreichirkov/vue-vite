@@ -1,5 +1,5 @@
 <template>
-  <card v-for="post in store.state.posts" :key="post.id">
+  <card v-for="post in filteredPosts" :key="post.id">
     <template v-slot:title>
       {{ post.title }}
     </template>
@@ -9,13 +9,14 @@
     </template>
 
     <template v-slot:description>
-      <controls :post="post" />
+      <controls :post="post" @setHashtag="setHashtag"/>
     </template>
   </card>
 </template>
 
 <script>
-import { store } from "./store";
+import {ref, computed} from "vue";
+import {store} from "./store";
 import Card from "../pokemon/Card.vue";
 import Controls from "./Controls.vue";
 
@@ -25,8 +26,26 @@ export default {
     Card
   },
   setup() {
+    const currentTag = ref()
+
+    const setHashtag = (hashtag) => {
+      currentTag.value = hashtag
+    }
+
+    const filteredPosts = computed(() => {
+      if (!currentTag.value) {
+        return store.state.posts
+      }
+
+      return store.state.posts.filter(
+        post => post.hashtags.includes(currentTag.value)
+      )
+    })
+
+
     return {
-      store
+      setHashtag,
+      filteredPosts
     }
   }
 }

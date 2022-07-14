@@ -5,15 +5,17 @@
 
 <script>
 import {computed} from "vue";
-import {testPosts} from "../microblog/testPosts.js";
+import { usePosts } from "./usePosts.js";
 import {useRoute} from 'vue-router'
 
 export default {
   name: "Post",
   setup() {
     const route = useRoute()
+    const postStore = usePosts()
+
     const post = computed(() =>
-        testPosts.find(x => x.id === parseInt(route.params.id, 10))
+        postStore.posts.value.find(x => x.id === parseInt(route.params.id, 10))
     )
 
     return {

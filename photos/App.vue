@@ -5,13 +5,17 @@
     </template>
 
     <template #sidebar>
-      <div v-for="album in albums" :key="album.id">
+      <album v-for="album in albums" :key="album.id" :album="album">
         {{ album.title }}
-      </div>
+      </album>
     </template>
 
     <template #content>
-      content
+      <img
+          v-for="photo in photos"
+          :key="photo.id"
+          :src="photo.thumbnailUrl"
+          alt="">
     </template>
   </Layout>
 </template>
@@ -20,10 +24,12 @@
 import {ref, onMounted, computed} from "vue";
 import Layout from "./Layout.vue";
 import {useStore} from "vuex";
+import Album from "./Album.vue";
 
 export default {
   components: {
-    Layout
+    Layout,
+    Album
   },
 
   setup() {
@@ -37,8 +43,13 @@ export default {
       return store.state.albums.all
     })
 
+    const photos = computed(() => {
+      return store.state.photos.all
+    })
+
     return {
-      albums
+      albums,
+      photos
     }
   }
 }

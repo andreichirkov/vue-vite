@@ -1,23 +1,5 @@
 <template>
-  <Layout>
-    <template #header>
-      Header
-    </template>
-
-    <template #sidebar>
-      <album v-for="album in albums" :key="album.id" :album="album">
-        {{ album.title }}
-      </album>
-    </template>
-
-    <template #content>
-      <img
-          v-for="photo in photos"
-          :key="photo.id"
-          :src="photo.thumbnailUrl"
-          alt="">
-    </template>
-  </Layout>
+  <router-view />
 </template>
 
 <script>
@@ -33,31 +15,12 @@ export default {
   },
 
   setup() {
-    const store = useStore()
 
-    onMounted(() => {
-      store.dispatch('albums/fetch')
-    })
-
-    const albums = computed(() => {
-      return store.state.albums.all
-    })
-
-    const photos = computed(() => {
-      return store.state.photos.all
-    })
-
-    return {
-      albums,
-      photos
-    }
   }
 }
 
 </script>
 
 <style>
-body {
-  margin: 0;
-}
+
 </style>

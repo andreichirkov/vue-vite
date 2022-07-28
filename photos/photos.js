@@ -3,24 +3,33 @@ export const photos = {
 
   state() {
     return {
-      all: []
+      all: [],
+      cache: {}
     }
   },
 
   mutations: {
-    setPhotosForCurrentAlbum(state, photos) {
-      state.all = photos.splice(0, 100)
+    setPhotosForCurrentAlbum(state, { photos, albumId }) {
+      state.all = photos
+      state.cache[albumId] =  photos
     }
   },
 
   actions: {
-    async getByAlbum(ctx, {album}) {
+    async getByAlbum(ctx, { albumId }) {
+      if (ctx.state.cache[albumId]) {
+        ctx.commit('setPhotosForCurrentAlbum', { photos: ctx.state.cache[albumId], albumId })
+        return
+      }
+
       const res = await fetch(
-          `https://jsonplaceholder.typicode.com/photos?album=${album.id}`
+          `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`
       )
       const json = await res.json()
 
-      ctx.commit('setPhotosForCurrentAlbum', json)
+      console.log('dlknv', json)
+
+      ctx.commit('setPhotosForCurrentAlbum', { photos: json, albumId})
     }
   }
 }

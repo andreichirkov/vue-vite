@@ -1,7 +1,7 @@
 <template>
-  <button @click="click">
+  <router-link :to="`/albums/${album.id}`">
     {{album.title}}
-  </button>
+  </router-link>
 </template>
 
 <script>
@@ -16,24 +16,12 @@ export default {
       type: Object,
       required: true
     }
-  },
-
-  setup(props) {
-    const store = useStore()
-
-    const click = () => {
-      store.dispatch('photos/getByAlbum', { album: props.album })
-    }
-
-    return {
-      click
-    }
   }
 }
 </script>
 
 <style scoped>
-button {
+a {
   background: darkgoldenrod;
   color: white;
   border: none;
@@ -42,12 +30,12 @@ button {
   font-size: 18px;
   border-radius: 5px;
   transition: .1s;
-  width: 100%;
+  /*width: 100%;*/
   display: block;
   text-align: center;
   text-decoration: none;
 }
-button:hover {
+a:hover {
   filter: brightness(120%);
   cursor: pointer;
   transition: .1s;
